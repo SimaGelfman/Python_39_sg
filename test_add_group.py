@@ -16,7 +16,7 @@ class TestCreateNewGroup(unittest.TestCase):
     def test_add_group(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd, admin="admin", secret="secret")
+        self.login(wd, admin="admin", password="secret")
         self.open_groups_page(wd)
 
         self.add_group(wd, Group("Group_name_1", "group_header_1", "group_footer_1"))
@@ -26,7 +26,7 @@ class TestCreateNewGroup(unittest.TestCase):
     def test_add_empty_group(self):
         wd = self.wd
         self.open_home_page(wd)
-        self.login(wd, admin="admin", secret="secret")
+        self.login(wd, admin="admin", password="secret")
 
         self.open_groups_page(wd)
         self.add_group(wd, Group("", "", ""))
@@ -58,13 +58,13 @@ class TestCreateNewGroup(unittest.TestCase):
         wd.find_element_by_link_text("groups").click()
         wd.get("http://localhost/addressbook/group.php")
 
-    def login(self, wd, admin, secret):
+    def login(self, wd, admin, password):
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(admin)
         wd.find_element_by_name("pass").click()
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(secret)
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_home_page(self, wd):
