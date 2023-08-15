@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from application import Application
-from Contact import Contact
+from fixture.application import Application
+from model.Contact import Contact
 import pytest
 
 
