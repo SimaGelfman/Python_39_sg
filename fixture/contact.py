@@ -59,7 +59,6 @@ class ContactHelper:
     def edit_first(self, contact):
         wd = self.app.wd
         self.app.go_home()
-        wd.find_element_by_id("10").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
