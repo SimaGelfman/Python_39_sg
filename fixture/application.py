@@ -9,14 +9,17 @@ class Application:
     def __init__(self):
         self.wd = webdriver.Chrome(
             executable_path=r'/Users/maximkulikov/SIMA/Learning_Python/chromedriver-mac-x64/chromedriver')
-        self.wd.implicitly_wait(6000)
+        self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
 
-
-
-
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False
 
     def open_home_page(self):
         wd = self.wd
