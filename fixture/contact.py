@@ -64,3 +64,8 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.app.go_home()
+
+    def count(self):
+        wd = self.app.wd
+        self.app.go_home()
+        return len(wd.find_elements_by_name("selected[]"))
