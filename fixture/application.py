@@ -27,7 +27,8 @@ class Application:
 
     def go_home(self):
         wd = self.wd
-        wd.find_element_by_link_text("home").click()
+        if not (wd.current_url.endswith("/index.php") and wd.find_elements_by_link_text("link=Last name")):
+            wd.find_element_by_link_text("home").click()
 
     def destroy(self):
         self.wd.quit()
