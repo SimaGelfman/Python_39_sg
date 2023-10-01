@@ -7,8 +7,10 @@ from fixture.session import SessionHelper
 
 class Application:
     def __init__(self):
-        self.wd = webdriver.Chrome(
-            executable_path=r'/Users/maximkulikov/SIMA/Learning_Python/chromedriver-mac-x64/chromedriver')
+        chrome_driver_path = r'/Users/sima.gelfman/github/chromedriver-mac-arm64/chromedriver'
+        options = webdriver.ChromeOptions()
+        options.add_argument("--timeout=60")
+        self.wd = webdriver.Chrome(executable_path=chrome_driver_path, options=options)
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
