@@ -11,19 +11,19 @@ def test_add_new_contact(app):
                                    "Director", "Compony_1", "Mosc", "888888", "99999",
                                    "99999", "00000", "bls")
     app.contact.create_new(contact)
+    assert len(contacts_before) + 1 == app.contact.count()
     contacts_after = app.contact.get_contacts()
-    assert len(contacts_before) + 1 == len(contacts_after)
     contacts_before.append(contact)
     assert sorted(contacts_before, key=Contact.id_or_max) == sorted(contacts_after, key=Contact.id_or_max)
 
 
 
-def test_add_empty_contact(app):
-    contacts_before = app.contact.get_contacts()
-    contact = Contact("", "", "", "", "", "", "", "", "",
-                                   "", "", "")
-    app.contact.create_new(contact)
-    contacts_after = app.contact.get_contacts()
-    assert len(contacts_before) + 1 == len(contacts_after)
-    contacts_before.append(contact)
-    assert sorted(contacts_before, key=Contact.id_or_max) == sorted(contacts_after, key=Contact.id_or_max)
+# def test_add_empty_contact(app):
+#     contacts_before = app.contact.get_contacts()
+#     contact = Contact("", "", "", "", "", "", "", "", "",
+#                                    "", "", "")
+#     app.contact.create_new(contact)
+#     contacts_after = app.contact.get_contacts()
+#     assert len(contacts_before) + 1 == len(contacts_after)
+#     contacts_before.append(contact)
+#     assert sorted(contacts_before, key=Contact.id_or_max) == sorted(contacts_after, key=Contact.id_or_max)

@@ -51,6 +51,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.app.go_home()
+        self.contacts_cache = None
 
     def delete_first(self):
         wd = self.app.wd
@@ -59,6 +60,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.app.go_home()
+        self.contacts_cache = None
 
     def edit_first(self, contact):
         wd = self.app.wd
@@ -67,23 +69,27 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.app.go_home()
+        self.contacts_cache = None
 
     def count(self):
         wd = self.app.wd
         self.app.go_home()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contacts_cache = None
+
     def get_contacts(self):
-        wd = self.app.wd
-        self.app.go_home()
-        contacts = []
-        contact_table = wd.find_element_by_id("maintable")
-        for row in contact_table.find_elements_by_css_selector('tr')[1:]:
-            id = row.find_element_by_css_selector('input[type="checkbox"]').get_attribute('id')
-            cells = row.find_elements_by_css_selector('td')
-            last_name = cells[1].text
-            first_name = cells[2].text
-            address = cells[3].text
-            contacts.append(Contact(firstname=first_name, lastname=last_name, address=address, id=id))
-        return contacts
+        if self.contacts_cache is None:
+            wd = self.app.wd
+            self.app.go_home()
+            self.contacts_cache = []
+            contact_table = wd.find_element_by_id("maintable")
+            for row in contact_table.find_elements_by_css_selector('tr')[1:]:
+                id = row.find_element_by_css_selector('input[type="checkbox"]').get_attribute('id')
+                cells = row.find_elements_by_css_selector('td')
+                last_name = cells[1].text
+                first_name = cells[2].text
+                address = cells[3].text
+                self.contacts_cache.append(Contact(firstname=first_name, lastname=last_name, address=address, id=id))
+        return self.contacts_cache
 
