@@ -1,4 +1,4 @@
-from model import Group
+from model.Group import Group
 
 
 class GroupHelper:

@@ -1,3 +1,6 @@
+from model.Contact import Contact
+
+
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -69,3 +72,18 @@ class ContactHelper:
         wd = self.app.wd
         self.app.go_home()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contacts(self):
+        wd = self.app.wd
+        self.app.go_home()
+        contacts = []
+        contact_table = wd.find_element_by_id("maintable")
+        for row in contact_table.find_elements_by_css_selector('tr')[1:]:
+            id = row.find_element_by_css_selector('input[type="checkbox"]').get_attribute('id')
+            cells = row.find_elements_by_css_selector('td')
+            last_name = cells[1].text
+            first_name = cells[2].text
+            address = cells[3].text
+            contacts.append(Contact(firstname=first_name, lastname=last_name, address=address, id=id))
+        return contacts
+
