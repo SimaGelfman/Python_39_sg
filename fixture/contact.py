@@ -53,19 +53,25 @@ class ContactHelper:
         self.app.go_home()
         self.contacts_cache = None
 
-    def delete_first(self):
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.app.go_home()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.app.go_home()
         self.contacts_cache = None
 
+    def delete_first(self):
+        self.delete_contact_by_index(0)
+
     def edit_first(self, contact):
+        self.edit_contact_by_index(contact, 0)
+
+    def edit_contact_by_index(self, contact, index):
         wd = self.app.wd
         self.app.go_home()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.app.go_home()
@@ -92,4 +98,3 @@ class ContactHelper:
                 address = cells[3].text
                 self.contacts_cache.append(Contact(firstname=first_name, lastname=last_name, address=address, id=id))
         return self.contacts_cache
-
