@@ -6,9 +6,17 @@ from fixture.session import SessionHelper
 
 
 class Application:
-    def __init__(self):
+    def __init__(self, browser, base_url):
         chrome_driver_path = '/Users/sima.gelfman/github/chromedriver-mac-arm64/chromedriver'
-        self.wd = webdriver.Chrome(executable_path=chrome_driver_path)
+        if browser == "chrome":
+            self.wd = webdriver.Chrome(executable_path=chrome_driver_path)
+        elif browser == "firefox":
+            self.wd = webdriver.Firefox()
+        elif browser == "safari":
+            self.wd = webdriver.Safari()
+        else:
+            raise ValueError("Unrecognized browser %s" % browser)
+        self.base_url = base_url
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
@@ -23,7 +31,7 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/index.php")
+        wd.get(self.base_url)
 
     def go_home(self):
         wd = self.wd
