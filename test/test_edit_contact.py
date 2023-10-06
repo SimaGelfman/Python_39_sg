@@ -12,7 +12,7 @@ def test_edit_contact(app):
     contact.id = contacts_before[index].id
     app.contact.edit_contact_by_index(contact, index)
 
-    len(contacts_before) == app.contact.count()
+    assert len(contacts_before) == app.contact.count()
     contacts_after = app.contact.get_contacts()
     contacts_before[index] = contact
     assert sorted(contacts_before, key=Contact.id_or_max) == sorted(contacts_after, key=Contact.id_or_max)
